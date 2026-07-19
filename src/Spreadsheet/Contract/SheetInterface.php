@@ -19,5 +19,5 @@ interface SheetInterface
 
     public function countRows(): int;
 
-    public function getCell(CoordinateInterface $coordinate): ?CellInterface;
+    public function getCell(CoordinateInterface|string $coordinate): ?CellInterface;
 }

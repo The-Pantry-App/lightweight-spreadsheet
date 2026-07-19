@@ -9,6 +9,7 @@ use ThePantry\LightweightSpreadsheet\Spreadsheet\Contract\CoordinateInterface;
 use ThePantry\LightweightSpreadsheet\Spreadsheet\Contract\RowInterface;
 use ThePantry\LightweightSpreadsheet\Spreadsheet\Contract\SheetInterface;
 use ThePantry\LightweightSpreadsheet\Spreadsheet\Helper\XlsxFileReader;
+use ThePantry\LightweightSpreadsheet\Spreadsheet\ValueObject\Coordinate;
 
 class XlsxSheet implements SheetInterface
 {
@@ -63,9 +64,13 @@ class XlsxSheet implements SheetInterface
         return null;
     }
 
-    public function getCell(CoordinateInterface $coordinate): ?CellInterface
+    public function getCell(CoordinateInterface|string $coordinate): ?CellInterface
     {
         $reader = XlsxFileReader::createReader($this->filepath, self::getWorksheetPath($this->index));
+
+        if (!$coordinate instanceof CoordinateInterface) {
+            $coordinate = Coordinate::fromString($coordinate);
+        }
 
         while ($reader->read()) {
             if (\XMLReader::ELEMENT === $reader->nodeType && 'c' === $reader->name && $reader->getAttribute('r') === (string) $coordinate) {
