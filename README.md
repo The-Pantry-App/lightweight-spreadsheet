@@ -63,11 +63,13 @@ $sheet = $spreadsheet->getSheetByName('Sheet1');
 $row = $sheet?->getRow(1);
 ```
 
-### Accessing a Specific Ceil
+### Accessing a Specific Cell
 
 ```php
 $sheet = $spreadsheet->getSheetByName('Sheet1');
-$row = $sheet?->getCeil('A1');
+$cell = $sheet?->getCell('A1');
+
+echo "Cell " . $cell->coordinate->toString() . ": " . $cell->value . PHP_EOL;
 ```
 
 ## Project Structure
